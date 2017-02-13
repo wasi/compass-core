@@ -3,6 +3,7 @@
 // makes a list inline.
 @mixin inline-list {
   list-style-type: none;
+
   &, & li {
     margin: 0;
     padding: 0;
@@ -26,14 +27,23 @@
 
 @mixin delimited-list($separator: ", ") {
   @include inline-list;
+
   li {
-    &:after { content: $separator; }
-    &:last-child {
-      &:after { content: ""; }
+    &:after {
+      content: $separator;
     }
+
+    &:last-child {
+      &:after {
+        content: "";
+      }
+    }
+
     @if support-legacy-browser("ie", "7", $threshold: $css-sel2-support-threshold) {
       &.last {
-        &:after { content: ""; }
+        &:after {
+          content: "";
+        }
       }
     }
   }
@@ -43,5 +53,6 @@
 // @deprecated
 @mixin comma-delimited-list {
   @warn "comma-delimited-list is deprecated. Please use delimited-list instead.";
+
   @include delimited-list;
 }

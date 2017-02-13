@@ -11,6 +11,7 @@
 // Credit: [quirksmode.org](http://www.quirksmode.org/blog/archives/2005/03/clearing_floats.html)
 @mixin clearfix {
   overflow: hidden;
+
   @include has-layout;
 }
 
@@ -20,13 +21,14 @@
 // outside the bounds of the container at the expense of more tricky CSS.
 @mixin legacy-pie-clearfix {
   &:after {
-    content    : "\0020";
-    display    : block;
-    height     : 0;
-    clear      : both;
-    overflow   : hidden;
-    visibility : hidden;
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
   }
+
   @include has-layout;
 }
 
@@ -40,5 +42,6 @@
     display: table;
     clear: both;
   }
+
   @include has-layout;
 }

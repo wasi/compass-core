@@ -11,19 +11,19 @@
 // Example:
 //
 //     .flex-column {
-//       /* For flexbox spec v1 */
+//       /* For flexbox spec v1
 //       @include flexbox((
 //         display: box,
 //         box-orient: vertical,
 //       ), $version: 1);
 //       
-//       /* For flexbox spec v2 */
+//       /* For flexbox spec v2
 //       @include flexbox((
 //         display: flexbox,
 //         flex-direction: column,
 //       ), $version: 2);
 //       
-//       /* Latest Spec */
+//       /* Latest Spec
 //       @include flexbox((
 //         display: flex,
 //         flex-direction: column,
@@ -33,17 +33,17 @@
 // Which compiles to:
 //
 //     .flex-row {
-//       /* For flexbox spec v1 */
+//       /* For flexbox spec v1
 //       display: -moz-box;
 //       -moz-box-orient: vertical;
 //       display: -webkit-box;
 //       -webkit-box-orient: vertical;
 //       
-//       /* For flexbox spec v2 */
+//       /* For flexbox spec v2
 //       display: -ms-flexbox;
 //       -ms-flex-direction: column;
 //       
-//       /* Latest Spec */
+//       /* Latest Spec
 //       display: -webkit-flex;
 //       -webkit-flex-direction: column;
 //       display: flex;
@@ -54,12 +54,8 @@
 
 $flexbox-support-threshold: $critical-usage-threshold !default;
 
-
 // @private
-$flexbox-capability-options: (
-  (full-support: true),
-  (partial-support: true, spec-versions: 3)
-);
+$flexbox-capability-options: (full-support: true), (partial-support: true, spec-versions: 3);
 
 // This is the underlying implementation for all the other mixins in this module.
 // It is the only way to access prefix support for older versions of the spec.
@@ -71,6 +67,7 @@ $flexbox-capability-options: (
 // recent version of the spec outputs an unprefixed version.
 @mixin flexbox($properties, $version: null) {
   $capability-options: $flexbox-capability-options;
+
   @if $version {
     $capability-options: (partial-support: true, spec-versions: $version);
   }
@@ -81,7 +78,8 @@ $flexbox-capability-options: (
       @each $prop, $value in $properties {
         @if $prop == display {
           display: prefix-identifier($value);
-        } @else {
+        }
+        @else {
           @include prefix-prop($prop, $value);
         }
       }

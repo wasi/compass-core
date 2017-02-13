@@ -3,7 +3,6 @@
 // The the user threshold for transition support. Defaults to `$graceful-usage-threshold`
 $transition-support-threshold: $graceful-usage-threshold !default;
 
-
 // CSS Transitions
 // Currently only works in Webkit.
 //
@@ -29,8 +28,6 @@ $default-transition-delay: null !default;
 
 $transitionable-prefixed-values: transform, transform-origin !default;
 
-
-
 // Checks if the value given is a unit of time.
 @function is-time($value) {
   @return if(type-of($value) == number, not not index(s ms, unit($value)), false);
@@ -41,16 +38,21 @@ $transitionable-prefixed-values: transform, transform-origin !default;
   @if not $prefix {
     @return $property;
   }
+
   @if type-of($property) == list or type-of($property) == arglist {
     $new-list: comma-list();
+
     @each $v in $property {
       $new-list: append($new-list, prefixed-for-transition($prefix, $v));
     }
+
     @return $new-list;
-  } @else {
+  }
+  @else {
     @if index($transitionable-prefixed-values, $property) {
       @return #{$prefix}-#{$property};
-    } @else {
+    }
+    @else {
       @return $property;
     }
   }
@@ -64,12 +66,15 @@ $transitionable-prefixed-values: transform, transform-origin !default;
     @if is-time($item) {
       @if map-has-key($transition-map, duration) {
         $transition-map: map-merge($transition-map, (delay: $item));
-      } @else {
+      }
+      @else {
         $transition-map: map-merge($transition-map, (duration: $item));
       }
-    } @else if map-has-key($transition-map, property) {
+    }
+    @else if map-has-key($transition-map, property) {
       $transition-map: map-merge($transition-map, (timing-function: $item));
-    } @else {
+    }
+    @else {
       $transition-map: map-merge($transition-map, (property: $item));
     }
   }
@@ -84,8 +89,10 @@ $transitionable-prefixed-values: transform, transform-origin !default;
 
 @mixin transition-property($properties...) {
   $properties: set-arglist-default($properties, $default-transition-property);
+
   @include with-each-prefix(css-transitions, $transition-support-threshold) {
     $props: if($current-prefix, prefixed-for-transition($current-prefix, $properties), $properties);
+
     @include prefix-prop(transition-property, $props);
   }
 }
@@ -97,9 +104,8 @@ $transitionable-prefixed-values: transform, transform-origin !default;
 
 @mixin transition-duration($durations...) {
   $durations: set-arglist-default($durations, $default-transition-duration);
-  @include prefixed-properties(css-transitions, $transition-support-threshold, (
-    transition-duration: $durations
-  ));
+
+  @include prefixed-properties(css-transitions, $transition-support-threshold, (transition-duration: $durations));
 }
 
 // One or more timing functions
@@ -110,9 +116,8 @@ $transitionable-prefixed-values: transform, transform-origin !default;
 
 @mixin transition-timing-function($functions...) {
   $functions: set-arglist-default($functions, $default-transition-function);
-  @include prefixed-properties(css-transitions, $transition-support-threshold, (
-    transition-timing-function: $functions
-  ));
+
+  @include prefixed-properties(css-transitions, $transition-support-threshold, (transition-timing-function: $functions));
 }
 
 // One or more transition-delays in seconds
@@ -122,19 +127,13 @@ $transitionable-prefixed-values: transform, transform-origin !default;
 
 @mixin transition-delay($delays...) {
   $delays: set-arglist-default($delays, $default-transition-delay);
-  @include prefixed-properties(css-transitions, $transition-support-threshold, (
-    transition-delay: $delays
-  ));
+
+  @include prefixed-properties(css-transitions, $transition-support-threshold, (transition-delay: $delays));
 }
 
 // Transition all-in-one shorthand
 
-@mixin single-transition(
-  $property: $default-transition-property,
-  $duration: $default-transition-duration,
-  $function: $default-transition-function,
-  $delay: $default-transition-delay
-) {
+@mixin single-transition($property: $default-transition-property, $duration: $default-transition-duration, $function: $default-transition-function, $delay: $default-transition-delay) {
   @include transition(compact($property $duration $function $delay));
 }
 
@@ -143,13 +142,11 @@ $transitionable-prefixed-values: transform, transform-origin !default;
   $transitions: if(length($transitions) == 1 and type-of(nth($transitions, 1)) == list and list-separator(nth($transitions, 1)) == comma, nth($transitions, 1), $transitions);
   $transitions: set-arglist-default($transitions, $default);
 
-
   @include with-each-prefix(css-transitions, $transition-support-threshold) {
     $delays: comma-list();
     $transitions-without-delays: comma-list();
     $transitions-with-delays: comma-list();
     $has-delays: false;
-
 
     // This block can be made considerably simpler at the point in time that
     // we no longer need to deal with the differences in how delays are treated.
@@ -168,22 +165,24 @@ $transitionable-prefixed-values: transform, transform-origin !default;
       @if $current-prefix == -webkit {
         // Keep a list of delays in case one is specified
         $delays: append($delays, if($delay, $delay, 0s));
-        $transitions-without-delays: append($transitions-without-delays,
-          prefixed-for-transition($current-prefix, $property) $duration $timing-function);
-      } @else {
-        $transitions-with-delays: append($transitions-with-delays,
-          prefixed-for-transition($current-prefix, $property) $duration $timing-function $delay);
+        $transitions-without-delays: append($transitions-without-delays, prefixed-for-transition($current-prefix, $property) $duration $timing-function);
+      }
+      @else {
+        $transitions-with-delays: append($transitions-with-delays, prefixed-for-transition($current-prefix, $property) $duration $timing-function $delay);
       }
     }
 
     @if $current-prefix == -webkit {
       @include prefix-prop(transition, $transitions-without-delays);
+
       @if $has-delays {
         @include prefix-prop(transition-delay, $delays);
       }
-    } @else if $current-prefix {
+    }
+    @else if $current-prefix {
       @include prefix-prop(transition, $transitions-with-delays);
-    } @else {
+    }
+    @else {
       transition: $transitions-with-delays;
     }
   }

@@ -1,15 +1,17 @@
 @import "project-setup";
+
 $default-has-layout-approach: block;
 
 @import "compass/utilities";
 
 .clearfix {
-    @include clearfix;
+  @include clearfix;
 }
 
 .pie-clearfix {
-    @include legacy-pie-clearfix;
+  @include legacy-pie-clearfix;
 }
+
 .simplified-pie-clearfix {
-    @include pie-clearfix;
+  @include pie-clearfix;
 }

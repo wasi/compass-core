@@ -21,9 +21,12 @@ $compass-configured: false !default;
     $default-configuration: reset-configuration();
     $default-configuration: add-sass-configuration($project-path);
   }
+
   $compass-initialized: true !global;
+
   @include debug-compass-configuration;
 }
+
 @include compass-initializer;
 
 //  `$options`:
@@ -38,17 +41,23 @@ $compass-configured: false !default;
 @mixin compass-configuration($options: (), $reconfigure: null, $arguments...) {
   @if not at-stylesheet-root() {
     // this should be @error once that exists.
-    @warn "include compass-configuration from the root level of your stylesheet."
+    @warn "include compass-configuration from the root level of your stylesheet.";
   }
+
   @if not $compass-configured or $reconfigure {
     $options: map-merge($options, keywords($arguments));
+
     @if length($arguments) > 0 {
-      @warn "compass-configuration accepts keyword arguments or a single map of options. Got: #{inspect($arguments)}."
+      @warn "compass-configuration accepts keyword arguments or a single map of options. Got: #{inspect($arguments)}.";
     }
+
     $invoke: add-configuration($options);
+
     @include debug-compass-configuration;
+
     $compass-configured: true !global;
-  } @else if $reconfigure == null {
-    @warn "Compass was already configured for this stylesheet."
+  }
+  @else if $reconfigure == null {
+    @warn "Compass was already configured for this stylesheet.";
   }
 }

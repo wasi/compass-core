@@ -15,16 +15,20 @@ $inline-block-alignment: middle !default;
   @if support-legacy-browser("firefox", "2", $threshold: $inline-block-support-threshold) {
     display: -moz-inline-stack;
   }
+
   // standard
   display: inline-block;
+
   @if $alignment and $alignment != none {
     vertical-align: $alignment;
   }
+
   // legacy IE support
   @if support-legacy-browser("ie", "7", $threshold: $inline-block-support-threshold) {
     @if $ie-alignment and $ie-alignment != none {
       *vertical-align: $ie-alignment;
     }
+
     *zoom: 1;
     *display: inline;
   }

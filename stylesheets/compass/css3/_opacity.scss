@@ -13,15 +13,22 @@ $opacity-usage-threshold: $graceful-usage-threshold !default;
   @include for-legacy-browser("ie", "8", $threshold: $opacity-usage-threshold) {
     @if $opacity == 1 {
       filter: unquote("progid:DXImageTransform.Microsoft.Alpha(enabled=false)");
-    } @else {
+    }
+    @else {
       filter: unquote("progid:DXImageTransform.Microsoft.Alpha(Opacity=#{round($opacity * 100)})");
     }
   }
+
+
   opacity: $opacity;
 }
 
 // Make an element completely transparent.
-@mixin transparent { @include opacity(0); }
+@mixin transparent {
+  @include opacity(0);
+}
 
 // Make an element completely opaque.
-@mixin opaque { @include opacity(1); }
+@mixin opaque {
+  @include opacity(1);
+}

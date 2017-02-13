@@ -7,7 +7,7 @@ $project-path: absolute-path(join-file-segments(".."));
 }
 
 @function asset-host($path) {
-  @return "http://assets#{str-length($path) % 4}.example.com"
+  @return "http://assets#{str-length($path) % 4}.example.com";
 }
 
 @include compass-configuration($asset-cache-buster: busted, $asset-host: asset-host);

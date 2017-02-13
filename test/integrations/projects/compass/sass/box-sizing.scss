@@ -1,11 +1,13 @@
 @import "compass/css3/box-sizing";
 
 .div {
-  @include box-sizing();
+  @include box-sizing;
 }
+
 .div {
   @include box-sizing(content-box);
 }
+
 .div {
   @include box-sizing(border-box);
 }

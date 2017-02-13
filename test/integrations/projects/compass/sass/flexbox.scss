@@ -54,36 +54,13 @@
 }
 
 .flexbox {
-  @include flexbox((
-    display: flex,
-    flex-direction: row-reverse,
-    flex-wrap: wrap-reverse,
-    flex-flow: row-reverse wrap-reverse,
-    order: 1,
-    flex: 1 0 auto,
-    flex-grow: 1,
-    flex-shrink: 0,
-    flex-basis: auto,
-    justify-content: flex-start,
-    align-items: flex-start,
-    align-self: flex-start,
-    align-content: flex-start
-  ));
+  @include flexbox((display: flex, flex-direction: row-reverse, flex-wrap: wrap-reverse, flex-flow: row-reverse wrap-reverse, order: 1, flex: 1 0 auto, flex-grow: 1, flex-shrink: 0, flex-basis: auto, justify-content: flex-start, align-items: flex-start, align-self: flex-start, align-content: flex-start));
 }
 
 .flexbox-2 {
-  @include flexbox((
-    display: flexbox,
-    flex-flow: row-reverse,
-    flex-order: 1,
-  ), $version: 2);
+  @include flexbox((display: flexbox, flex-flow: row-reverse, flex-order: 1), $version: 2);
 }
 
 .flexbox-1 {
-  @include flexbox((
-    display: box,
-    box-orient: vertical,
-    box-ordinal-group: 1,
-    box-flex: 1,
-  ), $version: 1);
+  @include flexbox((display: box, box-orient: vertical, box-ordinal-group: 1, box-flex: 1), $version: 1);
 }

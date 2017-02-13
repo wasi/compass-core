@@ -2,11 +2,13 @@
 @import "compass/css3/hyphenation";
 
 .word-break {
-	@include word-break(keep-all);
+  @include word-break(keep-all);
 }
+
 .hyphens {
-	@include hyphens(manual);
+  @include hyphens(manual);
 }
+
 .hyphenate {
-	@include hyphenation;
+  @include hyphenation;
 }

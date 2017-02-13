@@ -3,11 +3,14 @@
 
 @include keyframes(test) {
   0%, 100% {
-    background-color: red; }
+    background-color: red;
+  }
+
   50% {
     background-color: blue;
   }
 }
+
 
 .animation {
   @include animation(test);
